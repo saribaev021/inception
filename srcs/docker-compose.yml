@@ -5,8 +5,10 @@ services:
             context: ./requirements/nginx
             dockerfile: Dockerfile
         container_name: nginx-container
+        networks: 
+            - "inception"
         ports:
-            - "443:443"
+            - "${NGINX_HOST}:${NGINX_CONTAINER}"
         volumes:
             - ./requirements/nginx:/nginx_tmp
             - ./requirements/wordpress/srcs/wordpress:/var/www/wordpress
@@ -15,6 +17,8 @@ services:
             context: ./requirements/wordpress
             dockerfile: Dockerfile
         container_name: wordpress-container
+        networks: 
+            - "inception"
         volumes:
             - ./requirements/wordpress/srcs/wordpress:/var/www/wordpress
     mariadb:
@@ -22,51 +26,78 @@ services:
             context: ./requirements/mariadb
             dockerfile: Dockerfile
         container_name: mariadb-container
+        networks: 
+            - "inception"
         volumes:
             - db_data:/var/lib/mysql
+    
+#---------------------BONUS--------------------#
+
     ftp:
         build:
-            context: ./requirements/ftp
+            context: ./requirements/bonus/ftp
             dockerfile: Dockerfile
         container_name: ftp-container
+        networks: 
+            - "inception"
         ports:
-            - "20:20"
-            - "21:21"
-            - "21000:21000"
+            - "${FTP_TRANSFER_PORT_HOST}:${FTP_TRANSFER_PORT_CONTAINER}"
+            - "${FTP_CONECTION_PORT_HOST}:${FTP_CONECTION_PORT_CONTAINER}"
+            - "${FTP_PASSIVE_PORT_HOST}:${FTP_PASSIVE_PORT_CONTAINER}"
         volumes:
             - ./requirements/wordpress/srcs/wordpress:/home/ndreadno/
     adminer:
         build:
-            context: ./requirements/adminer
+            context: ./requirements/bonus/adminer
             dockerfile: Dockerfile
         container_name: adminer-container
+        networks: 
+            - "inception"
     redis:
         build: 
-            context: ./requirements/redis
+            context: ./requirements/bonus/redis
             dockerfile: Dockerfile
         container_name: redis-container
+        networks: 
+            - "inception"
     influxdb:
         build:
-            context: ./requirements/influxdb
+            context: ./requirements/bonus/influxdb
             dockerfile: Dockerfile
         container_name: influxdb-container
+        networks: 
+            - "inception"
     grafana:
         build:
-            context: ./requirements/grafana
+            context: ./requirements/bonus/grafana
             dockerfile: Dockerfile
         container_name: grafana-container
+        networks: 
+            - "inception"
         ports:
-            - "3000:3000"
+            - "${GRAFANA_HOST}:${GRAFANA_CONTAINER}"
     telegraf:
         build:
-            context: ./requirements/telegraf
+            context: ./requirements/bonus/telegraf
             dockerfile: Dockerfile
         container_name: telegraf-container
+        networks: 
+            - "inception"
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-
-    
+    my-site:
+        build:
+            context: ./requirements/bonus/my-site
+            dockerfile: Dockerfile
+        container_name: my-site-container
+        networks: 
+            - "inception"
+        environment:
+            - MY_SITE_CONTAINER=${MY_SITE_CONTAINER}
+        ports:
+            - ${MY_SITE_HOST}:${MY_SITE_CONTAINER}
 volumes:
     db_data: 
-        # external:
-        #     name: /Users/ndreadno/inception/srcs/requirements/mariadb/srcs/
+networks:
+    inception:
+        name: "inception"

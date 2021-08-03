@@ -1,4 +1,4 @@
-FROM alpine:3.12.5
+FROM alpine:3.12
 
 ENV TELEGRAF_CONFIG_PATH=/telegraf/etc/telegraf/telegraf.conf
 
