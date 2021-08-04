@@ -1,6 +1,7 @@
 version: "3.9"
 services:
     nginx:
+        restart: always
         build:
             context: ./requirements/nginx
             dockerfile: Dockerfile
@@ -10,9 +11,9 @@ services:
         ports:
             - "${NGINX_HOST}:${NGINX_CONTAINER}"
         volumes:
-            - ./requirements/nginx:/nginx_tmp
-            - ./requirements/wordpress/srcs/wordpress:/var/www/wordpress
+            - wp_data:/var/www/wordpress
     wordpress:
+        restart: always
         build:
             context: ./requirements/wordpress
             dockerfile: Dockerfile
@@ -22,6 +23,7 @@ services:
         volumes:
             - ./requirements/wordpress/srcs/wordpress:/var/www/wordpress
     mariadb:
+        restart: always
         build:
             context: ./requirements/mariadb
             dockerfile: Dockerfile
@@ -34,6 +36,7 @@ services:
 #---------------------BONUS--------------------#
 
     ftp:
+        restart: always
         build:
             context: ./requirements/bonus/ftp
             dockerfile: Dockerfile
@@ -45,8 +48,9 @@ services:
             - "${FTP_CONECTION_PORT_HOST}:${FTP_CONECTION_PORT_CONTAINER}"
             - "${FTP_PASSIVE_PORT_HOST}:${FTP_PASSIVE_PORT_CONTAINER}"
         volumes:
-            - ./requirements/wordpress/srcs/wordpress:/home/ndreadno/
+            - wp_data:/home/ndreadno/
     adminer:
+        restart: always
         build:
             context: ./requirements/bonus/adminer
             dockerfile: Dockerfile
@@ -54,6 +58,7 @@ services:
         networks: 
             - "inception"
     redis:
+        restart: always
         build: 
             context: ./requirements/bonus/redis
             dockerfile: Dockerfile
@@ -61,6 +66,7 @@ services:
         networks: 
             - "inception"
     influxdb:
+        restart: always
         build:
             context: ./requirements/bonus/influxdb
             dockerfile: Dockerfile
@@ -68,6 +74,7 @@ services:
         networks: 
             - "inception"
     grafana:
+        restart: always
         build:
             context: ./requirements/bonus/grafana
             dockerfile: Dockerfile
@@ -77,6 +84,7 @@ services:
         ports:
             - "${GRAFANA_HOST}:${GRAFANA_CONTAINER}"
     telegraf:
+        restart: always
         build:
             context: ./requirements/bonus/telegraf
             dockerfile: Dockerfile
@@ -86,6 +94,7 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
     my-site:
+        restart: always
         build:
             context: ./requirements/bonus/my-site
             dockerfile: Dockerfile
@@ -97,7 +106,20 @@ services:
         ports:
             - ${MY_SITE_HOST}:${MY_SITE_CONTAINER}
 volumes:
-    db_data: 
+    db_data:
+        name: db_data
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: /home/${USERNAME}/data/db_data
+    wp_data:
+        name: wp_data
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: /home/${USERNAME}/data/wp_data
 networks:
     inception:
         name: "inception"
