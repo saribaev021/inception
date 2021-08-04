@@ -5,9 +5,10 @@ RUN sed -i 's/\/run\/php\/php7.3-fpm.sock/0.0.0.0:9000/g' /etc/php/7.3/fpm/pool.
 RUN mkdir -p /run/php/
 
 COPY ./conf/init.sh ./
-COPY ./conf/wp-config.php ./
-COPY ./srcs/wordpress-5.5.1.tar.gz ./
-RUN tar -xzvf wordpress-5.5.1.tar.gz
-RUN rm wordpress-5.5.1.tar.gz
+COPY ./srcs/wordpress ./
+# COPY ./conf/wp-config.php ./
+# COPY ./srcs/wordpress-5.5.1.tar.gz ./
+# RUN tar -xzvf wordpress-5.5.1.tar.gz
+# RUN rm wordpress-5.5.1.tar.gz
 CMD ["bash","init.sh"]
 
