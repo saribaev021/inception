@@ -23,11 +23,6 @@ define( 'WP_REDIS_PORT', 6379 );
 // define( 'WP_REDIS_PASSWORD', 'secret' );
 define( 'WP_REDIS_TIMEOUT', 1 );
 define( 'WP_REDIS_READ_TIMEOUT', 1 );
-define( 'FTP_USER', 'ndreadno' ); #most likely not necessary, can be entered in the web form as well
-define( 'FTP_HOST', 'ftp:21' );
-define( 'FTP_BASE', 'ndreadno' ); #the bind mounted directory to /var/www/wordpress, necessary b/c we chroot
-define( 'FTP_CONTENT_DIR', '/ndreadno/wp-content/' ); #the *relative* path as seen after an sftp login
-// define( 'FTP_PLUGIN_DIR ', '/ndreadno/wp-content/plugins/' ); #see above
 
 // change the database for each site to avoid cache collisions
 define( 'WP_REDIS_DATABASE', 0 );
