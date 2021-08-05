@@ -4,10 +4,10 @@ COPY ./conf/custom.conf /etc/nginx/nginx.conf
 RUN mkdir /etc/nginx/ssl
 RUN adduser -D "ndreadno"; echo "ndreadno:12ssh" | chpasswd ;
 RUN mkdir /var/www/adminer
-RUN mkdir ./wordpress
+# RUN mkdir ./wordpress
 COPY ./conf/init.sh ./
 COPY ./conf/adminer.php ./var/www/adminer/index.php
-COPY ./conf/wordpress ./wordpress
+# COPY ./conf/wordpress ./wordpress
 # COPY ./conf/wordpress-5.5.1.tar.gz ./
 # COPY ./conf/wp-config.php ./
 # RUN tar -xzvf wordpress-5.5.1.tar.gz

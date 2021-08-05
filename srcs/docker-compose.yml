@@ -13,6 +13,10 @@ services:
         volumes:
             - wp_data:/var/www/wordpress
     wordpress:
+        environment:
+            WP_USER: ${WP_USER}
+            WP_PASSWORD: ${WP_PASSWORD}
+            WP_EMAIL: ${WP_EMAIL}
         restart: always
         build:
             context: ./requirements/wordpress
