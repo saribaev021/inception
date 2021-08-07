@@ -5,6 +5,9 @@ services:
         build:
             context: ./requirements/nginx
             dockerfile: Dockerfile
+            args:
+                - NGINX_USER=${NGINX_USER}
+                - NGINX_PASSWORD=${NGINX_PASSWORD}
         container_name: nginx-container
         networks: 
             - "inception"
@@ -44,6 +47,9 @@ services:
         build:
             context: ./requirements/bonus/ftp
             dockerfile: Dockerfile
+            args:
+                - FTP_USER=${FTP_USER}
+                - FTP_PASSWORD=${FTP_PASSWORD}
         container_name: ftp-container
         networks: 
             - "inception"

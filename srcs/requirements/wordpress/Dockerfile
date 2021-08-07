@@ -7,9 +7,5 @@ RUN mkdir ./wordpress
 
 COPY ./conf/init.sh ./
 COPY ./srcs/wordpress ./wordpress
-# COPY ./conf/wp-config.php ./
-# COPY ./srcs/wordpress-5.5.1.tar.gz ./
-# RUN tar -xzvf wordpress-5.5.1.tar.gz
-# RUN rm wordpress-5.5.1.tar.gz
 CMD ["bash","init.sh"]
 
