@@ -2,7 +2,6 @@ FROM debian:buster
 RUN apt-get update &&  apt-get -y install mariadb-server bash procps
 
 COPY ./conf/init_db.sh .
-COPY ./conf/init_db.sql .
 COPY ./conf/wordpress.sql .
 COPY ./conf/my.cnf /etc/mysql/my.cnf
 
