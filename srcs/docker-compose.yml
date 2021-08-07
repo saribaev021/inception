@@ -28,8 +28,6 @@ services:
             - wp_data:/var/www/wordpress
     mariadb:
         restart: always
-        environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         build:
             context: ./requirements/mariadb
             dockerfile: Dockerfile
