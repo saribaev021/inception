@@ -4,9 +4,7 @@
 all:
 	docker-compose  -f ./srcs/docker-compose.yml --env-file ./srcs/.env up --build -d 
 clean:
-	docker-compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down -v 
-	docker container prune -f
+	docker-compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down 
 fclean: clean
-	sudo rm -rf srcs/inception/*
-
+	docker container prune -f
 re: fclean all
