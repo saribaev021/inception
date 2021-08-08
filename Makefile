@@ -6,5 +6,5 @@ all:
 clean:
 	docker-compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down 
 fclean: clean
-	docker container prune -f
+	docker system prune -f -a --volumes
 re: fclean all
